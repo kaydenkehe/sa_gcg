@@ -53,8 +53,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[api,dev]"
 ```
 
-Python ≥ 3.10. Tested on 3.11 and 3.13. (`fastchat` is gated to <3.13;
-omit if you don't need its template parsing.)
+Python ≥ 3.10. Tested on 3.11 and 3.13.
 
 ## Datasets
 

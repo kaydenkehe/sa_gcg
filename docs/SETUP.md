@@ -35,8 +35,8 @@ nvidia-smi          # confirm GPU is visible
 nvcc --version      # confirm CUDA toolkit (need >=11.8)
 ```
 
-Python ≥3.10 is required. 3.11 is the recommended sweet spot (the optional
-`fastchat` dependency is pinned to `python_version < '3.13'`).
+Python ≥3.10 is required. 3.11 is the recommended sweet spot, though 3.13
+also works.
 
 ---
 
