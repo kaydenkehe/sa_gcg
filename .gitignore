@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Env
+.env
+.venv/
+venv/
+*.swp
+
+# Artifacts
+runs/
+artifacts/
+outputs/
+*.pt
+*.safetensors
+!tests/fixtures/*.pt
+
+# Data (large)
+data/raw/cache/
+
+# Notebook
+.ipynb_checkpoints/

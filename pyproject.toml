@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sa_gcg"
+version = "0.1.0"
+description = "Soft Activation-Guided GCG: composite-loss adversarial suffix attack"
+authors = [{name = "SA-GCG authors"}]
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.38",
+    "accelerate>=0.27",
+    "datasets>=2.16",
+    "fastchat>=0.2.20; python_version < '3.13'",
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "pandas>=2.0",
+    "tqdm>=4.65",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+api = [
+    "openai>=1.30",
+    "anthropic>=0.25",
+    "google-generativeai>=0.5",
+]
+strongreject = [
+    "strong_reject @ git+https://github.com/dsbowen/strong_reject.git",
+]
+dev = [
+    "pytest>=7.4",
+    "pytest-mock>=3.12",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+sa-gcg-attack = "sa_gcg.cli.run_attack:main"
+sa-gcg-extract-direction = "sa_gcg.cli.extract_direction:main"
+sa-gcg-verify-splits = "sa_gcg.cli.verify_splits:main"
+sa-gcg-transfer = "sa_gcg.cli.run_transfer:main"
+sa-gcg-mechanism = "sa_gcg.cli.run_mechanism:main"
+sa-gcg-defenses = "sa_gcg.cli.run_defenses:main"
+sa-gcg-coherence = "sa_gcg.cli.run_coherence:main"
+sa-gcg-tables = "sa_gcg.cli.make_tables:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+sa_gcg = ["data/raw/*.csv", "data/raw/*.txt", "data/raw/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q --tb=short"
+markers = [
+    "slow: marks tests as slow (need GPU and/or large model loads)",
+    "api: marks tests that require API keys",
+]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"

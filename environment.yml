@@ -1,0 +1,28 @@
+name: sa_gcg
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pytorch=2.8.*
+  - pytorch-cuda=12.1
+  - pip
+  - pip:
+      - transformers>=4.38
+      - accelerate>=0.27
+      - datasets>=2.16
+      - fastchat==0.2.20
+      - numpy>=1.24
+      - scipy>=1.11
+      - pandas>=2.0
+      - tqdm>=4.65
+      - pyyaml>=6.0
+      - requests>=2.31
+      - matplotlib>=3.7
+      - openai>=1.30
+      - anthropic>=0.25
+      - google-generativeai>=0.5
+      - pytest>=7.4
+      - pytest-mock>=3.12
+      - ruff>=0.4
