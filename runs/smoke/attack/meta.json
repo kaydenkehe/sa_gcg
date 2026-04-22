@@ -1,0 +1,14 @@
+{
+  "wall_clock_s": 55.592522382736206,
+  "n_steps": 100.0,
+  "attack": "sa_gcg",
+  "scope": "layer",
+  "lambda": 1.0,
+  "polish": 50.0,
+  "ell_star": 24.0,
+  "p_star": -1.0,
+  "g_CE": 0.4398055374622345,
+  "g_act": 0.7512359619140625,
+  "schedule": "slushy",
+  "random_direction": 0.0
+}

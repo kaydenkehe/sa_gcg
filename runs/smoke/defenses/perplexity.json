@@ -1,0 +1,7 @@
+{
+  "threshold_nll": 2.7397241592407227,
+  "suffix_nll": 12.622700691223145,
+  "passes_filter": false,
+  "ppl_quantile": 0.99,
+  "n_reference": 10
+}

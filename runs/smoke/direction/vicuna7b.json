@@ -1,0 +1,17 @@
+{
+  "ell_star": 24,
+  "p_star": -1,
+  "selection_scores": {
+    "mean_proj_harmful": 29.081889152526855
+  },
+  "extraction_meta": {
+    "model": "lmsys/vicuna-7b-v1.5",
+    "n_harmful": 2,
+    "n_harmless": 2,
+    "candidate_positions": [
+      -1
+    ],
+    "kl_threshold": 0.1,
+    "max_layer_frac": 0.8
+  }
+}

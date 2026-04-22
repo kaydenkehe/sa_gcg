@@ -16,7 +16,7 @@ venv/
 .profile
 
 # Artifacts
-runs/
+#runs/
 artifacts/
 outputs/
 *.pt
