@@ -61,6 +61,12 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--n-queries", type=int, default=1, help="Closed-API only.")
     p.add_argument("--is-full-prompt", action="store_true",
                    help="Suffix replaces the user message (PAIR-style).")
+    p.add_argument("--openai-model", default=None,
+                   help="Override OpenAIBackend.model (e.g. gpt-4o-2024-08-06).")
+    p.add_argument("--anthropic-model", default=None,
+                   help="Override AnthropicBackend.model (e.g. claude-sonnet-4-5).")
+    p.add_argument("--google-model", default=None,
+                   help="Override GeminiBackend.model (e.g. gemini-1.5-pro).")
     return p
 
 
@@ -87,7 +93,12 @@ def _run_open(target_alias: str, args, behaviors, suffix_str, hb, sr) -> dict[st
 
 def _run_closed(provider: str, args, behaviors, suffix_str, hb, sr) -> dict[str, EvalResult]:
     backend_cls = _CLOSED_BACKENDS[provider]
-    backend = backend_cls()
+    override = {
+        "openai": args.openai_model,
+        "anthropic": args.anthropic_model,
+        "google": args.google_model,
+    }[provider]
+    backend = backend_cls(model=override) if override else backend_cls()
     cfg = ClosedTransferConfig(
         suffix_str=suffix_str,
         is_full_prompt=args.is_full_prompt,
