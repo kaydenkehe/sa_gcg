@@ -59,7 +59,7 @@ def cosine_curves_for_suffix(
         input_ids = torch.tensor([slot.input_ids], device=model.device)
         with AllLayerReaders(layers_module) as readers, torch.no_grad():
             model(input_ids=input_ids)
-            layer_tensors = {i: r.tensor for i, r in readers._readers.items()}
+            layer_tensors = {i: r.tensor for i, r in readers.items()}
         per_layer = all_layer_cosines(layer_tensors, d, position=position)
         for l, c in per_layer.items():
             sums[l] += c
