@@ -25,8 +25,8 @@ fi
 # JailbreakBench (Chao et al. 2024) — via Hugging Face datasets repo
 if [[ ! -f jailbreakbench.csv ]]; then
     curl -fsSL -o jailbreakbench.csv \
-        https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors/resolve/main/data/behaviors.csv \
-        || echo "WARN: HF download failed; install 'huggingface_hub' and run 'huggingface-cli download JailbreakBench/JBB-Behaviors --repo-type dataset'"
+        https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors/resolve/main/data/harmful-behaviors.csv \
+        || echo "WARN: HF download failed; install 'huggingface_hub' and run 'hf download JailbreakBench/JBB-Behaviors --repo-type dataset --local-dir /tmp/jbb && cp /tmp/jbb/data/harmful-behaviors.csv jailbreakbench.csv'"
 fi
 
 # StrongREJECT (Souly et al. 2024)
