@@ -13,9 +13,10 @@ Outputs:
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
-PILOT_ROOT = Path("runs/pilot/sa_gcg")
+PILOT_ROOT = Path(os.environ.get("PILOT_ROOT", "runs/pilot/sa_gcg"))
 N_BEHAVIORS = 5
 DATASET = "advbench"
 MODEL = "meta-llama/Llama-2-7b-chat-hf"

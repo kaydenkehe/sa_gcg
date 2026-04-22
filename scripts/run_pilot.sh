@@ -3,18 +3,20 @@
 # Skips cells whose suffix.json already exists, so safe to re-run after a crash.
 #
 # Usage:
-#   bash scripts/run_pilot.sh [direction.pt] [model_id] [out_root]
+#   bash scripts/run_pilot.sh [direction.pt] [model_id] [pilot_root]
 #
-# Defaults:
-#   direction.pt = runs/full/direction/llama2-7b-chat.pt
-#   model_id     = meta-llama/Llama-2-7b-chat-hf
-#   out_root     = runs/pilot/sa_gcg
+# Env-var overrides (take precedence over positional args):
+#   PILOT_ROOT   target directory  (default: runs/pilot/sa_gcg)
+#   BUDGET_S     wall-clock per cell, seconds  (default: 900 = 15 min)
+#
+# Example — long 1-hr/cell pilot into its own tree:
+#   PILOT_ROOT=runs/pilot_long/sa_gcg BUDGET_S=3600 bash scripts/run_pilot.sh
 
 set -uo pipefail
 
 DIR="${1:-runs/full/direction/llama2-7b-chat.pt}"
 MODEL="${2:-meta-llama/Llama-2-7b-chat-hf}"
-OUT_ROOT="${3:-runs/pilot/sa_gcg}"
+OUT_ROOT="${PILOT_ROOT:-${3:-runs/pilot/sa_gcg}}"
 
 if [[ ! -f "$DIR" ]]; then
     echo "ERROR: direction file not found: $DIR" >&2
@@ -25,7 +27,7 @@ SCOPES=(single layer global)
 LAMBDAS=(0.5 1.0)
 POLISHES=(0 50)
 
-BUDGET_S=900            # 15 min per cell (3 hr total / 12 cells)
+BUDGET_S="${BUDGET_S:-900}"   # 15 min default; override via env var
 N_STEPS_CEIL=100000     # ceiling; budget terminates first
 LIMIT=5                 # 5-behavior pilot per §8
 SEED=0
