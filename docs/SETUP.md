@@ -385,18 +385,17 @@ placement.
 Loads HarmBench-cls on the GPU and runs it on the smoke generations.
 
 ```bash
-# Re-attack with --eval-metrics to invoke HarmBench during the run.
-# (The attack writes a generations.txt; the runner scores it inline.)
-sa-gcg-attack \
-    --model lmsys/vicuna-7b-v1.5 \
-    --attack sa_gcg \
+# Score the smoke suffix with HarmBench-cls. The attack CLI doesn't run
+# eval — sa-gcg-transfer does, with --targets pointing at the same model
+# you trained on (i.e. in-distribution ASR).
+sa-gcg-transfer \
+    --suffix-from runs/smoke/attack/suffix.json \
+    --targets open:vicuna-7b \
     --dataset advbench --limit 5 \
-    --direction-path runs/smoke/direction/vicuna7b.pt \
-    --n-steps 50 --batch-size 64 \
-    --eval-metrics substring harmbench_cls \
-    --out-dir runs/smoke/attack_with_eval
+    --metrics substring harmbench_cls \
+    --out-dir runs/smoke/eval
 
-cat runs/smoke/attack_with_eval/eval_harmbench_cls.json
+cat runs/smoke/eval/transfer_open_vicuna-7b.json
 # expect: a 'score' field in [0,1] and 'per_sample' list of 5 booleans
 ```
 
@@ -484,14 +483,20 @@ cell:
 
 ```bash
 for attack in no_suffix gcg soft_gcg agcg sa_gcg ortho autodan pair; do
+    out=runs/full/vicuna-7b/advbench/$attack
     sa-gcg-attack \
         --model lmsys/vicuna-7b-v1.5 \
         --attack $attack \
         --dataset advbench \
         --direction-path runs/smoke/direction/vicuna7b.pt \
         --n-steps 500 --batch-size 256 --suffix-length 20 \
-        --eval-metrics substring harmbench_cls strongreject \
-        --out-dir runs/full/vicuna-7b/advbench/$attack
+        --out-dir $out
+    sa-gcg-transfer \
+        --suffix-from $out/suffix.json \
+        --targets open:vicuna-7b open:llama-2-7b open:llama-3-8b \
+        --dataset advbench \
+        --metrics substring harmbench_cls strongreject \
+        --out-dir $out
 done
 
 sa-gcg-tables \
