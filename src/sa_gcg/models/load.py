@@ -69,13 +69,17 @@ def load_chat_model(
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
-    torch_dtype = {"fp16": torch.float16, "bf16": torch.bfloat16, "fp32": torch.float32}[dtype]
+    th_dtype = {"fp16": torch.float16, "bf16": torch.bfloat16, "fp32": torch.float32}[dtype]
     tokenizer = AutoTokenizer.from_pretrained(
         name_or_path, use_fast=True, trust_remote_code=trust_remote_code
     )
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
-    kwargs: dict = {"torch_dtype": torch_dtype, "trust_remote_code": trust_remote_code}
+    kwargs: dict = {
+        "dtype": th_dtype,
+        "trust_remote_code": trust_remote_code,
+        "use_safetensors": True,
+    }
     if device_map is not None:
         kwargs["device_map"] = device_map
     model = AutoModelForCausalLM.from_pretrained(name_or_path, **kwargs)

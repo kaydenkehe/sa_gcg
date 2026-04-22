@@ -49,7 +49,8 @@ class LlamaGuardScorer:
         self._tok = AutoTokenizer.from_pretrained(self.model_name)
         self._mdl = AutoModelForCausalLM.from_pretrained(
             self.model_name,
-            torch_dtype=getattr(torch, self.dtype),
+            dtype=getattr(torch, self.dtype),
+            use_safetensors=True,
             device_map=self.device,
         ).eval()
 

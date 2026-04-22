@@ -121,9 +121,16 @@ def build_input_ids(
     """
     sys_text = system if system is not None else spec.default_system
     prefix = spec.prefix_tmpl.format(system=sys_text or "")
-    full_text = (
-        prefix + user_message + spec.user_postfix + suffix_str + spec.suffix_postfix
-    )
+    if suffix_str:
+        full_text = (
+            prefix + user_message + spec.user_postfix + suffix_str + spec.suffix_postfix
+        )
+    else:
+        # No suffix (e.g. direction extraction). Skip user_postfix so it
+        # doesn't fuse with the leading space in suffix_postfix and produce
+        # a double-space sequence that the SentencePiece tokenizer encodes
+        # differently than the single-space anchor.
+        full_text = prefix + user_message + spec.suffix_postfix
     full_ids = tokenizer(full_text, add_special_tokens=add_special_tokens).input_ids
     return _slot_from_anchor(tokenizer, spec, full_ids, suffix_str)
 

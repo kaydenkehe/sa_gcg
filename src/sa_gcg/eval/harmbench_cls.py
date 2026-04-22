@@ -70,8 +70,9 @@ class HarmBenchScorer:
         self._tok = AutoTokenizer.from_pretrained(self.model_name, use_fast=True)
         self._mdl = AutoModelForCausalLM.from_pretrained(
             self.model_name,
-            torch_dtype=getattr(torch, self.dtype),
+            dtype=getattr(torch, self.dtype),
             device_map=self.device,
+            use_safetensors=True,
         ).eval()
 
     def score(

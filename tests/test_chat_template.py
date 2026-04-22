@@ -91,3 +91,27 @@ def test_vicuna_split():
 
 def test_mistral_split():
     _check_split(MISTRAL_SPEC)
+
+
+def _check_empty_suffix(spec):
+    tok = _FakeTokenizer()
+    slot = build_input_ids(tok, spec, "Tell me about X.", "")
+    assert slot.suffix_ids == []
+    assert slot.suffix_start == slot.suffix_end
+    assert slot.prefix_ids + slot.postfix_ids == slot.input_ids
+
+
+def test_llama2_empty_suffix():
+    _check_empty_suffix(LLAMA2_SPEC)
+
+
+def test_llama3_empty_suffix():
+    _check_empty_suffix(LLAMA3_SPEC)
+
+
+def test_vicuna_empty_suffix():
+    _check_empty_suffix(VICUNA_SPEC)
+
+
+def test_mistral_empty_suffix():
+    _check_empty_suffix(MISTRAL_SPEC)
