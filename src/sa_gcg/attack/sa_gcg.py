@@ -94,7 +94,7 @@ class SAGCG(AttackBase):
             if scope is ActivationScope.GLOBAL:
                 with AllLayerReaders(layer_mod) as readers:
                     out = model(inputs_embeds=emb_full, use_cache=False)
-                    h_by_layer = {i: r_.tensor for i, r_ in readers._readers.items()}
+                    h_by_layer = {i: r_.tensor for i, r_ in readers.items()}
             else:
                 with ResidualReader(layer_mod[ell_star]) as reader:
                     out = model(inputs_embeds=emb_full, use_cache=False)
