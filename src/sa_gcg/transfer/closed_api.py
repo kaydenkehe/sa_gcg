@@ -85,7 +85,7 @@ class OpenAIBackend:
 
 @dataclass
 class AnthropicBackend:
-    model: str = "claude-3-5-sonnet-20241022"
+    model: str = "claude-sonnet-4-5"
     temperature: float = 0.0
     max_tokens: int = 512
     api_key_env: str = "ANTHROPIC_API_KEY"
@@ -135,7 +135,7 @@ class AnthropicBackend:
 
 @dataclass
 class GeminiBackend:
-    model: str = "gemini-1.5-pro"
+    model: str = "gemini-2.5-pro"
     temperature: float = 0.0
     max_tokens: int = 512
     api_key_env: str = "GOOGLE_API_KEY"
