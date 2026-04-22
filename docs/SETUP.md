@@ -471,7 +471,8 @@ sa-gcg-defenses \
 
 # (c) Pairwise coherence — needs OPENAI_API_KEY
 sa-gcg-coherence \
-    --suffix-a runs/smoke/attack/suffix.json \
+    --model lmsys/vicuna-7b-v1.5 \
+    --suffix-from runs/smoke/attack/suffix.json \
     --out-dir runs/smoke/coherence
 ```
 
