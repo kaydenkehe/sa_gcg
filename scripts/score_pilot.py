@@ -17,9 +17,9 @@ import os
 from pathlib import Path
 
 PILOT_ROOT = Path(os.environ.get("PILOT_ROOT", "runs/pilot/sa_gcg"))
-N_BEHAVIORS = 5
-DATASET = "advbench"
-MODEL = "meta-llama/Llama-2-7b-chat-hf"
+N_BEHAVIORS = int(os.environ.get("N_BEHAVIORS", "5"))
+DATASET = os.environ.get("DATASET", "advbench")
+MODEL = os.environ.get("MODEL", "meta-llama/Llama-2-7b-chat-hf")
 
 
 def load_pilot_cells():

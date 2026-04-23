@@ -8,9 +8,13 @@
 # Env-var overrides (take precedence over positional args):
 #   PILOT_ROOT   target directory  (default: runs/pilot/sa_gcg)
 #   BUDGET_S     wall-clock per cell, seconds  (default: 900 = 15 min)
+#   LIMIT        behaviors per cell  (default: 5)
 #
 # Example — long 1-hr/cell pilot into its own tree:
 #   PILOT_ROOT=runs/pilot_long/sa_gcg BUDGET_S=3600 bash scripts/run_pilot.sh
+#
+# Example — n=25 universal pilot (paper sizing) at 1 hr/cell:
+#   PILOT_ROOT=runs/pilot_n25/sa_gcg BUDGET_S=3600 LIMIT=25 bash scripts/run_pilot.sh
 
 set -uo pipefail
 
@@ -29,7 +33,7 @@ POLISHES=(0 50)
 
 BUDGET_S="${BUDGET_S:-900}"   # 15 min default; override via env var
 N_STEPS_CEIL=100000     # ceiling; budget terminates first
-LIMIT=5                 # 5-behavior pilot per §8
+LIMIT="${LIMIT:-5}"     # behaviors per cell; override via env var
 SEED=0
 
 n_total=0
